@@ -19,6 +19,14 @@ public class JavaUnitTest {
 	}
 	
 	@Test
+	public void testGenerateSharePrice() {
+		int min = 10;
+		int max = 100;
+		int sharePrice = generator.getSharePrice();
+		assertEquals(sharePrice >= min || sharePrice <= max, true);
+	}
+	
+	@Test
 	public void testGenerateBudget() {
 		int min = 1000;
 		int max = 10000;
