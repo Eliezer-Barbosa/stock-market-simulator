@@ -1,5 +1,7 @@
 package com.stockmarketsimulator.model;
 
+import java.util.Random;
+
 public class Company {
 	
 	private int id;
