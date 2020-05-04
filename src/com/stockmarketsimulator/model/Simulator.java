@@ -21,6 +21,7 @@ public class Simulator {
 		for (int i = 1; i < 100 + 1; i++) {
 			Company company = new Company();
 			company.setId(i);
+			company.setName(generator.generateName());
 			company.setShares(generator.getShare());
 			company.setSharePrice(generator.getSharePrice());
 			companies.add(company);
@@ -32,6 +33,7 @@ public class Simulator {
 		for (int i = 1; i < 100 + 1; i++) {
 			Investor investor = new Investor();
 			investor.setId(i);
+			investor.setName(generator.generateName());
 			investor.setBudget(generator.getBudget());
 			investors.add(investor);
 		}
@@ -47,16 +49,19 @@ public class Simulator {
 		
 		for (Company company : myCompanies) {
 			System.out.println(
-					"Company Id: " + company.getId() + "\n" + 
+					"Company Id: " + company.getId() + "\n" +
+					"Company name: " + company.getName() + "\n" +
 					"Shares: " + company.getShares() + "\n" + 
 					"Share Price: " + company.getSharePrice() + "\n\n");
 		}
 		
 		for (Investor investor : myInvestors) {
 			System.out.println(
-					"Investor Id: " + investor.getId() + "\n" + 
+					"Investor Id: " + investor.getId() + "\n" +
+				    "Investor name: " + investor.getName() + "\n" +
 					"Budget: " + investor.getBudget() + "\n\n");
 		}
+		
 	}
 	
 

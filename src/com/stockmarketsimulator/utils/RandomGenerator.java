@@ -15,6 +15,18 @@ public class RandomGenerator {
 	
 	private int share, sharePrice, budget;
 	
+	//private String name;
+	
+	public String generateName() {
+		String[] lettersCombination = { "a", "e", "i", "o", "u", "k", "w", "s", "r" };
+		String name = "";
+		for (int i = 0; i < 5; i++) {
+		     int j = (int) (Math.random() * lettersCombination.length);
+		     name += lettersCombination[j];
+		}
+		return name;
+	}
+	
 	public int getShare() {
 		Random random = new Random();
 		share =  random.nextInt(this.maximumShare - this.minimumShare) + minimumShare;
@@ -31,13 +43,6 @@ public class RandomGenerator {
 		Random random = new Random();
 		budget =  random.nextInt(this.maximumBudget - this.minimumBudget) + minimumBudget;
 		return budget;
-	}
-	
-	public static void main(String[] args) {
-		RandomGenerator generator = new RandomGenerator();
-		System.out.println("share: " + generator.getShare());
-		System.out.println("budget: " + generator.getBudget());
-		System.out.println("Price: " + generator.getSharePrice());
 	}
 	
 }
