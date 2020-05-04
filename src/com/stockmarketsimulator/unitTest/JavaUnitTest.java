@@ -4,11 +4,13 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
+import com.stockmarketsimulator.model.Simulator;
 import com.stockmarketsimulator.utils.RandomGenerator;
 
 public class JavaUnitTest {
 	
 	private RandomGenerator generator = new RandomGenerator();
+	private Simulator simulator = new Simulator();
 	
 	@Test
 	public void testGenerateShare() {
@@ -32,6 +34,16 @@ public class JavaUnitTest {
 		int max = 10000;
 		int budget = generator.getBudget();
 		assertEquals(budget >= min || budget <= max, true);
+	}
+	
+	@Test
+	public void testGenerateCompanies() {
+		assertEquals(100, simulator.generateCompanies().size());
+	}
+	
+	@Test
+	public void testGenerateInvestors() {
+		assertEquals(100, simulator.generateInvestors().size());
 	}
 
 }

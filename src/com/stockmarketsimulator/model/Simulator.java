@@ -28,14 +28,34 @@ public class Simulator {
 		return companies;
 	}
 	
+	public List<Investor> generateInvestors() {
+		for (int i = 1; i < 100 + 1; i++) {
+			Investor investor = new Investor();
+			investor.setId(i);
+			investor.setBudget(generator.getBudget());
+			investors.add(investor);
+		}
+		return investors;
+	}
+
 	public static void main(String[] args) {
+		
 		Simulator simulator = new Simulator();
+		
 		List<Company> myCompanies = simulator.generateCompanies();
+		List<Investor> myInvestors = simulator.generateInvestors();
+		
 		for (Company company : myCompanies) {
 			System.out.println(
-					"Id: " + company.getId() + "\n" + 
+					"Company Id: " + company.getId() + "\n" + 
 					"Shares: " + company.getShares() + "\n" + 
 					"Share Price: " + company.getSharePrice() + "\n\n");
+		}
+		
+		for (Investor investor : myInvestors) {
+			System.out.println(
+					"Investor Id: " + investor.getId() + "\n" + 
+					"Budget: " + investor.getBudget() + "\n\n");
 		}
 	}
 	
