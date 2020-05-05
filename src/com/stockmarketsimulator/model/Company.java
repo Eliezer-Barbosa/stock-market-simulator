@@ -1,7 +1,9 @@
 package com.stockmarketsimulator.model;
 
-public class Company {
+public class Company implements Comparable<Company> {
 	
+	public int sharesSold;
+	public int capital;
 	private int id;
 	private String name;
 	private int shares;
@@ -37,6 +39,15 @@ public class Company {
 	
 	public void setSharePrice(int sharePrice) {
 		this.sharePrice = sharePrice;
+	}
+
+	@Override
+	public int compareTo(Company otherCompany) {
+		int result = 0;
+		if (otherCompany.capital > this.capital) { result =  -1; }
+		if (otherCompany.capital == this.capital) { result =  0; }
+		if (otherCompany.capital < this.capital) { result =  1; }
+		return result;
 	}
 
 }

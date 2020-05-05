@@ -15,7 +15,11 @@ public class RandomGenerator {
 	
 	private int share, sharePrice, budget;
 	
-	//private String name;
+	Random random = new Random();
+	
+	public int getRandomId() {
+		return random.nextInt(100 - 1 + 1) + 1;
+	}
 	
 	public String generateName() {
 		String[] lettersCombination = { "a", "e", "i", "o", "u", "k", "w", "s", "r" };
@@ -28,13 +32,11 @@ public class RandomGenerator {
 	}
 	
 	public int getShare() {
-		Random random = new Random();
 		share =  random.nextInt(this.maximumShare - this.minimumShare) + minimumShare;
 		return share;
 	}
 	
 	public int getSharePrice() {
-		Random random = new Random();
 		sharePrice =  random.nextInt(this.maximumSharePrice - this.minimumSharePrice) + minimumSharePrice;
 		return sharePrice;
 	}
