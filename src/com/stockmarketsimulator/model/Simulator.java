@@ -1,6 +1,7 @@
 package com.stockmarketsimulator.model;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
@@ -88,12 +89,35 @@ public class Simulator {
 	
 
 	private static void simulationResults(List<Investor> myInvestors, List<Company> myCompanies) {
-		for (Company company : myCompanies) {
-			int capital = company.getShares() * company.getSharePrice();
-			company.capital = capital;
-			
-			System.out.println("Company " + company.getId() + ": Capital: $ " + company.capital);
+		ArrayList<Integer> highestCapital = new ArrayList<>();
+		ArrayList<Integer> lowestCapital = new ArrayList<>();
 
+		for (Company company : myCompanies) {
+			int capital = company.sharesSold * company.getSharePrice();
+			company.capital = capital;
+			highestCapital.add(capital);
+			lowestCapital.add(capital);
+			
+			System.out.println("Company " + 
+					company.getId() + " " + 
+					company.getName() + ": Capital: $ " + 
+					company.capital);
+		}
+		
+		Collections.sort(lowestCapital);
+		Collections.sort(highestCapital, Collections.reverseOrder());
+		System.out.println("");
+		
+		for (int i = 0; i < highestCapital.size(); i++) {
+			if (highestCapital.get(0).equals(highestCapital.get(i))) {
+				System.out.println("Highest: " + highestCapital.get(0));
+			}
+		}
+		
+		for (int i = 0; i < lowestCapital.size(); i++) {
+			if (lowestCapital.get(0).equals(lowestCapital.get(i))) {
+				System.out.println("Lowest: " + lowestCapital.get(0));
+			}
 		}
 		
 	}
