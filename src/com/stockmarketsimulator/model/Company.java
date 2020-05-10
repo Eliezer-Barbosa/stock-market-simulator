@@ -2,13 +2,29 @@ package com.stockmarketsimulator.model;
 
 public class Company implements Comparable<Company> {
 	
-	public int sharesSold;
-	public int capital;
+	private int sharesSold;
+	private int capital;
 	private int id;
 	private String name;
 	private int shares;
 	private int sharePrice;
 	
+	public int getSharesSold() {
+		return sharesSold;
+	}
+
+	public void setSharesSold(int sharesSold) {
+		this.sharesSold = sharesSold;
+	}
+
+	public int getCapital() {
+		return capital;
+	}
+
+	public void setCapital(int capital) {
+		this.capital = capital;
+	}
+
 	public int getId() {
 		return id;
 	}
