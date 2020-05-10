@@ -30,6 +30,7 @@ public class Simulator {
 			company.setSharePrice(generator.getSharePrice());
 			companies.add(company);
 			totalShares = totalShares + company.getShares();
+			
 		}
 		return companies;
 	}
@@ -55,24 +56,11 @@ public class Simulator {
 				
 		System.out.println("Total Shares: " + simulator.totalShares);
 		System.out.println("Total Budget: " + simulator.totalBudget + "\n");
-//		for (Company company : myCompanies) {
-//			System.out.println(
-//					"Company Id: " + company.getId() + "\n" +
-//					"Company name: " + company.getName() + "\n" +
-//					"Shares: " + company.getShares() + "\n" + 
-//					"Share Price: " + company.getSharePrice() + "\n\n");
-//		}
-//		
-//		for (Investor investor : myInvestors) {
-//			System.out.println(
-//					"Investor Id: " + investor.getId() + "\n" +
-//				    "Investor name: " + investor.getName() + "\n" +
-//					"Budget: " + investor.getBudget() + "\n\n");
-//		}
 			
 		tradingDay(myInvestors, myCompanies);
+		
 		for (Investor investor : myInvestors) {
-			if (investor.getBudget() !=0 ) {
+			if (investor.getBudget() != 0 ) {
 				tradingDay(myInvestors, myCompanies);
 			} else {
 				for (Company company : myCompanies) {
@@ -82,6 +70,7 @@ public class Simulator {
 				}
 			}
 		}
+		
 		simulationResults(myInvestors, myCompanies);
 		
 	}
@@ -91,7 +80,58 @@ public class Simulator {
 	private static void simulationResults(List<Investor> myInvestors, List<Company> myCompanies) {
 		ArrayList<Integer> highestCapital = new ArrayList<>();
 		ArrayList<Integer> lowestCapital = new ArrayList<>();
+		ArrayList<Integer> shareBoughtsHighest = new ArrayList<>();
+		ArrayList<Integer> shareBoughtsLowest = new ArrayList<>();
 
+		showCompaniesCapital(myCompanies, highestCapital, lowestCapital);
+		
+		companiesWithTheHighestCapital(myCompanies, highestCapital);	
+		
+		companiesWithTheLowestCapital(myCompanies, lowestCapital);
+		
+		investorsWithTheHighestNumberOfShares(myInvestors, shareBoughtsHighest);
+		
+		investorsWithTheLowestNumberOfShares(myInvestors, shareBoughtsLowest);
+		
+//		System.out.println("\n");
+//		System.out.println("HIGUEST: " + shareBoughtsHighest);
+//		System.out.println("LOWEST: " + shareBoughtsLowest);
+	}
+
+	private static void investorsWithTheLowestNumberOfShares(List<Investor> myInvestors,
+			ArrayList<Integer> shareBoughtsLowest) {
+		System.out.println("\nInvestor with the lowest number of shares:".toUpperCase());
+		
+		for (int i = 0; i < myInvestors.size(); i++) {
+			shareBoughtsLowest.add(myInvestors.get(i).getShareBoughts());
+			Collections.sort(shareBoughtsLowest);
+		}
+		
+		for (Investor investor : myInvestors) {
+			if (investor.getShareBoughts() == shareBoughtsLowest.get(0)) {
+				System.out.println("Investor name: " + investor.getName() + " Shares: " + investor.getShareBoughts());
+			}
+		}
+	}
+
+	private static void investorsWithTheHighestNumberOfShares(List<Investor> myInvestors,
+			ArrayList<Integer> shareBoughtsHighest) {
+		System.out.println("\nInvestor with the highest number of shares:".toUpperCase());
+		
+		for (int i = 0; i < myInvestors.size(); i++) {
+			shareBoughtsHighest.add(myInvestors.get(i).getShareBoughts());
+			Collections.sort(shareBoughtsHighest, Collections.reverseOrder());
+		}
+		
+		for (Investor investor : myInvestors) {
+			if (investor.getShareBoughts() == shareBoughtsHighest.get(0)) {
+				System.out.println("Investor name: " + investor.getName() + " Shares: " + investor.getShareBoughts());
+			}
+		}
+	}
+
+	private static void showCompaniesCapital(List<Company> myCompanies, ArrayList<Integer> highestCapital,
+			ArrayList<Integer> lowestCapital) {
 		for (Company company : myCompanies) {
 			int capital = company.sharesSold * company.getSharePrice();
 			company.capital = capital;
@@ -102,38 +142,67 @@ public class Simulator {
 					company.getId() + " " + 
 					company.getName() + ": Capital: $ " + 
 					company.capital);
+			
+			Collections.sort(lowestCapital);
+			Collections.sort(highestCapital, Collections.reverseOrder());
+			System.out.println("");
+			
 		}
-		
-		Collections.sort(lowestCapital);
-		Collections.sort(highestCapital, Collections.reverseOrder());
-		System.out.println("");
-		
+	}
+
+	private static void companiesWithTheLowestCapital(List<Company> myCompanies, ArrayList<Integer> lowestCapital) {
+		System.out.println("Company with the lowest capital:".toUpperCase());
+		int qtdlowest = 0;
+		ArrayList<Company> companiesName = new ArrayList<>();
+
+		for (int i = 0; i < lowestCapital.size(); i++) {
+
+			if (lowestCapital.get(0).equals(lowestCapital.get(i))) {
+				qtdlowest++;
+				for (Company c : myCompanies) {
+					if (c.capital == 0) {
+						companiesName.add(c);
+					}
+
+				}
+				System.out.println("Company name: " + companiesName.get(i).getName() + " " + " Capital: $ " + lowestCapital.get(0));
+
+			}
+
+		}
+	}
+
+	private static void companiesWithTheHighestCapital(List<Company> myCompanies, ArrayList<Integer> highestCapital) {
+		System.out.println("Company with the highest capital:".toUpperCase());
 		for (int i = 0; i < highestCapital.size(); i++) {
 			if (highestCapital.get(0).equals(highestCapital.get(i))) {
-				System.out.println("Highest: " + highestCapital.get(0));
+				for (Company c : myCompanies) {
+					boolean companyName = c.capital == highestCapital.get(0);
+					if (companyName) {
+						System.out.println("Company name: " + c.getName() + " " + " Capital: $ " + highestCapital.get(0) + "\n");
+					}
+				}
 			}
+			
 		}
-		
-		for (int i = 0; i < lowestCapital.size(); i++) {
-			if (lowestCapital.get(0).equals(lowestCapital.get(i))) {
-				System.out.println("Lowest: " + lowestCapital.get(0));
-			}
-		}
-		
 	}
 
 	private static void tradingDay(List<Investor> myInvestors, List<Company> myCompanies) {
 		Random random = new Random();
-		int x = 0;
+		int position = 0;
 		for (int i = 0; i < 100; i++) {
-			x = getRandomNumber(random, x);
-			myInvestors.get(i).buyFrom(myCompanies.get(x));
-			System.out.println("Investor " + myInvestors.get(i).getId() + 
-					" bougth from " + "Company " + myCompanies.get(x).getId());
-			myCompanies.get(x).sharesSold++;
-			checkSharesSold(myCompanies, x);	
+			position = getRandomNumber(random, position);
+			myInvestors.get(i).buyFrom(myCompanies.get(position));
+			showTradingDayTransactions(myInvestors, myCompanies, position, i);
+			checkSharesSold(myCompanies, position);	
 		}
 		
+	}
+
+	private static void showTradingDayTransactions(List<Investor> myInvestors, List<Company> myCompanies, int position, int i) {
+		System.out.println("Investor " + myInvestors.get(i).getId() + 
+				" bougth from " + "Company " + myCompanies.get(position).getId());
+		myCompanies.get(position).sharesSold++;
 	}
 
 	private static void checkSharesSold(List<Company> myCompanies, int x) {

@@ -8,18 +8,12 @@ public class Investor {
 	private int id;
 	private String name;
 	private int budget;
-	private List<ShareBought> shareBoughts;
-	
-	public Investor() {
-		this.shareBoughts = new ArrayList<>();
-	}
+	private int shareBoughts;
 	
 	public void buyFrom (Company company) {
 		if (this.budget >= company.getSharePrice() && company.getShares() > 0) {
-			ShareBought shareBought = new ShareBought();
-			shareBought.setCompany(company);
-			shareBought.setInvestor(this);
-			this.shareBoughts.add(shareBought);
+			this.budget-=company.getSharePrice();
+			this.shareBoughts++;
 		}
 	}
 	
@@ -45,6 +39,10 @@ public class Investor {
 	
 	public void setBudget(int budget) {
 		this.budget = budget;
+	}
+
+	public int getShareBoughts() {
+		return this.shareBoughts;
 	}
 
 }
