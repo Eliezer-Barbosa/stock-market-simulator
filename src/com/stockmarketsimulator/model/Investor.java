@@ -1,20 +1,50 @@
 package com.stockmarketsimulator.model;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Observable;
 
-public class Investor {
+public class Investor extends Observable implements Trade {
 	
 	private int id;
 	private String name;
 	private int budget;
 	private int shareBoughts;
 	
-	public void buyFrom (Company company) {
+	private String action = "";
+	private boolean status = true;
+	
+	@Override
+	public void deal() {
+		this.action = "deal";
+		this.changeState();
+	}
+	
+	private void changeState() {
+		setChanged();
+		notifyObservers(action);
+	}
+	
+	public void buyFrom(Company company) {
+		this.addObserver(company);
 		if (this.budget >= company.getSharePrice() && company.getShares() > 0) {
-			this.budget-=company.getSharePrice();
+			this.budget -= company.getSharePrice();
 			this.shareBoughts++;
+			this.deal();
 		}
+		if (this.budget < 10) {
+			// this investor is out
+			System.err.println("INVESTOR OUT! ID " + this.getId() + " budget left: " + this.budget);
+			this.removeInvestor();
+		}
+		
+		if (company.getShares() == 0) {
+			// this company is out
+			System.err.println("COMPANY OUT! ID " + company.getId() + " shares left: " + company.getShares());
+			company.setStatus(false);
+		}
+	}
+	
+	private void removeInvestor() {
+		this.status = false;	
 	}
 	
 	public int getId() {
@@ -43,6 +73,14 @@ public class Investor {
 
 	public int getShareBoughts() {
 		return this.shareBoughts;
+	}
+	
+	public boolean isStatus() {
+		return status;
+	}
+
+	public void setStatus(boolean status) {
+		this.status = status;
 	}
 
 }

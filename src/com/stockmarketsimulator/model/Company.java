@@ -1,6 +1,9 @@
 package com.stockmarketsimulator.model;
 
-public class Company implements Comparable<Company> {
+import java.util.Observable;
+import java.util.Observer;
+
+public class Company implements Observer, Trade {
 	
 	private int sharesSold;
 	private int capital;
@@ -8,6 +11,46 @@ public class Company implements Comparable<Company> {
 	private String name;
 	private int shares;
 	private int sharePrice;
+	
+	private boolean status = true;
+	
+	// method implementation of Trade interface
+		@Override
+		public void deal() {
+			
+			// decrement share by -1
+			this.shares -= 1;
+			
+			// increment shares sold by +1
+			this.sharesSold += 1;
+			
+			alterSharePrice(this.sharesSold);
+			
+		}
+
+		private void alterSharePrice(int currentSharesSold) {
+			if (currentSharesSold == 10) {
+				//System.out.println("Double price: before - " + this.sharePrice);
+				doubleSharePrice();
+				//System.out.println("Double price: after - " + this.sharePrice);
+			}		
+		}
+
+		private void doubleSharePrice() {
+			this.sharePrice *= 2;
+		}
+		
+		// method implementation of Observer interface
+		@Override
+		public void update(Observable observable, Object object) {
+			//Investor investor = (Investor) object;
+			String action = String.valueOf(object);
+			
+			if (action.equals("deal")) {
+				this.deal();
+			}
+			
+		}
 	
 	public int getSharesSold() {
 		return sharesSold;
@@ -56,14 +99,13 @@ public class Company implements Comparable<Company> {
 	public void setSharePrice(int sharePrice) {
 		this.sharePrice = sharePrice;
 	}
+	
+	public boolean isStatus() {
+		return status;
+	}
 
-	@Override
-	public int compareTo(Company otherCompany) {
-		int result = 0;
-		if (otherCompany.capital > this.capital) { result =  -1; }
-		if (otherCompany.capital == this.capital) { result =  0; }
-		if (otherCompany.capital < this.capital) { result =  1; }
-		return result;
+	public void setStatus(boolean status) {
+		this.status = status;
 	}
 
 }

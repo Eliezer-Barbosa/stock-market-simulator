@@ -1,6 +1,10 @@
 package com.stockmarketsimulator.utils;
 
+import java.util.ArrayList;
 import java.util.Random;
+
+import com.stockmarketsimulator.model.Company;
+import com.stockmarketsimulator.model.Investor;
 
 public class RandomGenerator {
 	
@@ -15,10 +19,11 @@ public class RandomGenerator {
 	
 	private int share, sharePrice, budget;
 	
-	Random random = new Random();
+	private static Random random = new Random();
 	
-	public int getRandomId() {
-		return random.nextInt(100 - 1 + 1) + 1;
+	public static int getRandomId() {
+		int minimun = 1, maximun = 100;
+		return minimun + random.nextInt(maximun);
 	}
 	
 	public String generateName() {
@@ -45,6 +50,33 @@ public class RandomGenerator {
 		Random random = new Random();
 		budget =  random.nextInt(this.maximumBudget - this.minimumBudget) + minimumBudget;
 		return budget;
+	}
+	
+	public ArrayList<Company> generateCompanies(int quantity) {
+		ArrayList<Company> companiesGenerated = new ArrayList<>();
+		for (int i = 1; i < quantity + 1; i++) {
+			Company company = new Company();
+			company.setId(i);
+			company.setName(this.generateName());
+			company.setSharePrice(this.getSharePrice());
+			company.setShares(this.getShare());
+			companiesGenerated.add(company);
+		}
+		return companiesGenerated;
+		
+	}
+
+	public ArrayList<Investor> generateInvestors(int quantity) {
+		ArrayList<Investor> investorsGenerated = new ArrayList<>();
+		for (int i = 1; i < quantity + 1; i++) {
+			Investor investor = new Investor();
+			investor.setId(i);
+			investor.setName(this.generateName());
+			investor.setBudget(this.getBudget());
+			investorsGenerated.add(investor);
+		}
+		return investorsGenerated;
+		
 	}
 	
 }
