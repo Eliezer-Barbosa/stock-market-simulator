@@ -1,0 +1,5 @@
+In this project I am using Observer Design Pattern to notify the company when an investor want to buy a share.
+In this scenario, both company and investor implements an interface called Trade, that contains only
+one method called deal.
+the investor is the observable and the company is the observer. when an investor buy from a company,
+this company will be notified.
